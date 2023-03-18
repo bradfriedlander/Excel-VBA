@@ -1,7 +1,8 @@
 Attribute VB_Name = "BingMapApi"
+Private apiKey As String
+
 ' REF: https://syntaxbytetutorials.com/excel-function-to-calculate-distance-using-google-maps-api-with-vba/
 ' Get key from key vault
-Private Const apiKey As String = "{API Key}"
 Function TravelTime(origin, destination)
     Dim parsed As Dictionary
     Set parsed = GetTravelRoute(origin, destination)
@@ -16,6 +17,9 @@ Function TravelDistance(origin, destination)
 End Function
 
 Function GetTravelRoute(origin, destination)
+    If apiKey = "" Then
+        apiKey = Environ("BingMapApiKey")
+    End If
     Dim strUrl As String
     ' REF https://docs.microsoft.com/en-us/bingmaps/rest-services/routes/calculate-a-route
     ' GET http://dev.virtualearth.net/REST/v1/Routes?wayPoint.1={wayPoint1}&waypoint.2={waypoint2}&maxSolutions={maxSolutions}&distanceUnit={distanceUnit}&key={BingMapsKey}
